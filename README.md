@@ -33,19 +33,6 @@ Options:
 
 ## Install
 
-### Arch Linux
-
-Use the AUR helper of your choice or install [manga-cli-git](https://aur.archlinux.org/packages/manga-cli-git) manually
-
-Use the following commands when using yay or paru:
-
-```sh
-yay -S manga-cli-git
-```
-
-```sh
-paru -S manga-cli-git
-```
 
 ### Linux
 
@@ -66,5 +53,3 @@ sudo cp manga-cli /usr/local/bin/manga-cli
 - curl
 - git
 - img2pdf
-- zathura
-- zathura-pdf-mupdf **OR** zathura-pdf-poppler
