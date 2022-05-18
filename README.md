@@ -20,16 +20,13 @@ Bash script for downloading mangas into PDF format via the terminal by scraping 
 Bash script for reading mangas via the terminal
 
 Usage:
-	manga-cli [Option] [Manga Name]
+	manga-cli-downloads [Option] [Manga Name]
 
 Options:
 	-h, --help		Print this help page
 	-V, --version		Print version number
 	-u, --update		Fetch latest version from the Github repository
-	-f, --fullscreen	Open Zathura in fullscreen mode 
 	-l, --last-session    	Open last session
-	-c, --cache-size	Print cache size ($HOME/.cache/manga-cli)
-	-C, --clear-cache	Clear cache ($HOME/.cache/manga-cli)
 ```
 Mangas are automatically downloaded to $HOME/manga-cli-downloads/mangs
 
