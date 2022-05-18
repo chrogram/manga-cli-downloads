@@ -49,7 +49,7 @@ show_help() {
 		printf "%s\n" "${line}"
 	done <<-EOF
 	
-	manga-cli ${version} ( github.com/7USTIN/manga-cli )
+	manga-cli ${version} ( github.com/chrogram/manga-cli-downloads )
 
 	Bash script for reading mangas via the terminal
 
