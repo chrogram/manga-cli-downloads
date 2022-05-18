@@ -1,7 +1,7 @@
 # manga-cli-downloads
 
 Fork of 7USTIN's manga-cli.
-Now able to download a specfic range chapters of a manga.
+Now able to download a specfic range of chapters of a manga.
 
 Bash script for downloading mangas into PDF format via the terminal by scraping [manganato](https://manganato.com/)
 
