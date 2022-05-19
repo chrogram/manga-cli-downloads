@@ -39,7 +39,7 @@ Install dependencies [(See below)](#Dependencies)
 
 ```sh
 git clone https://github.com/chrogram/manga-cli-downloads.git && cd manga-cli-downloads
-sudo chmod -x manga-cli-downloads
+sudo chmod a+rx manga-cli-downloads
 sudo cp manga-cli-downloads /usr/local/bin/manga-cli-downloads
 ```
 
