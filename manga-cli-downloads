@@ -3,7 +3,7 @@
 version="1.0.0"
 old_ifs="${IFS}"
 dir="${HOME}/manga-cli-downloads/mangas"
-dependencies=("ls" "cat" "curl" "sed" "awk" "tr" "du" "rm" "mkdir" "git" "diff" "patch" "img2pdf" "zathura")
+dependencies=("ls" "cat" "curl" "gsed" "awk" "tr" "du" "rm" "mkdir" "git" "diff" "patch" "img2pdf")
 github_source="https://raw.githubusercontent.com/chrogram/manga-cli-downloads/master/manga-cli-downloads"
 
 # Text colors
@@ -156,8 +156,8 @@ scrape_mangas() {
 	
 	scraped_results=$(
 		curl --silent "https://manganato.com/search/story/${search_query}" | # Scrape URL
-		sed --silent '/panel-search-story/,$p' | # Delete text before 'panel-search-story'
-		sed --silent '/clear: both/q;p' # Delete text after 'clear: both'
+		gsed --silent '/panel-search-story/,$p' | # Delete text before 'panel-search-story'
+		gsed --silent '/clear: both/q;p' # Delete text after 'clear: both'
 	)
 	
 	IFS=$'\n'
@@ -200,8 +200,8 @@ scrape_chapter_list() {
 	# Get chapter URLs in reversed order
 	rev_chapter_urls=($(
 		curl --silent "${manga_url}" | # Scrape URL
-		sed --silent '/row-content-chapter/,$p' | # Delete text before 'row-content-chapter'
-		sed --silent '/<\/ul>/q;p' | # Delete text after '</ul>'
+		gsed --silent '/row-content-chapter/,$p' | # Delete text before 'row-content-chapter'
+		gsed --silent '/<\/ul>/q;p' | # Delete text after '</ul>'
 		awk 'BEGIN{RS="\" title="; FS="<a rel=\"nofollow\" class=\"chapter-name text-nowrap\" href=\""}NF>1{print $NF}' # Get URLs from HTML 'href' attribute
 	))
 
@@ -244,8 +244,8 @@ scrape_chapter() {
 
 		chapter_image_urls=($(
 			curl --silent "${chapter_url}" | # Scrape URL
-			sed --silent '/container-chapter-reader/,$p' | # Delete text before 'container-chapter-reader'
-			sed --silent '/max-height: 380px/q;p' | # Delete text after 'max-height: 380px'
+			gsed --silent '/container-chapter-reader/,$p' | # Delete text before 'container-chapter-reader'
+			gsed --silent '/max-height: 380px/q;p' | # Delete text after 'max-height: 380px'
 			awk 'BEGIN{RS="\" alt="; FS="src=\""}NF>1{print $NF}' # Get image URLs from HTML 'src' attribute
 		))
 
@@ -258,12 +258,28 @@ scrape_chapter() {
 			((i=i + 1))
 
 			# Download image in the background
-			curl \
-				--silent \
-				--create-dirs \
-				--header 'Referer: https://readmanganato.com/' \
-				--output "${image_dir}/${i}.jpg" \
-				"${image_src}" &
+			if ((${i} < 10)); then
+				curl \
+					--silent \
+					--create-dirs \
+					--header 'Referer: https://readmanganato.com/' \
+					--output "${image_dir}/00${i}.jpg" \
+					"${image_src}" &
+			elif ((${i} < 100)); then
+				curl \
+					--silent \
+					--create-dirs \
+					--header 'Referer: https://readmanganato.com/' \
+					--output "${image_dir}/0${i}.jpg" \
+					"${image_src}" &
+			else
+				curl \
+					--silent \
+					--create-dirs \
+					--header 'Referer: https://readmanganato.com/' \
+					--output "${image_dir}/${i}.jpg" \
+					"${image_src}" &
+			fi
 		done
 
 		wait # Wait until all images are downloaded
@@ -296,6 +312,7 @@ download_all() {
 		chapter_url="${chapter_urls[${selected_chapter_num} - 1]}"
 		#printf "$index || $selected_chapter_num\n"
 		scrape_chapter
+
 		convert_imgs_to_pdf
 		#printf "index: $index\n"
 	done

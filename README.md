@@ -28,7 +28,7 @@ Options:
 	-u, --update		Fetch latest version from the Github repository
 	-l, --last-session    	Open last session
 ```
-Mangas are automatically downloaded to $HOME/manga-cli-downloads/mangs
+Mangas are automatically downloaded to $HOME/manga-cli-downloads/mangas
 
 ## Install
 
