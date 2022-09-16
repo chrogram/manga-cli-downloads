@@ -2,7 +2,7 @@
 
 version="1.0.0"
 old_ifs="${IFS}"
-dir="${HOME}/manga-cli-downloads/mangas"
+dir="${HOME}/manga-cli-downloads/downloaded-mangas"
 dependencies=("ls" "cat" "curl" "gsed" "awk" "tr" "du" "rm" "mkdir" "git" "diff" "patch" "img2pdf")
 github_source="https://raw.githubusercontent.com/chrogram/manga-cli-downloads/master/manga-cli-downloads"
 
@@ -224,7 +224,6 @@ scrape_chapter_list() {
 }
 
 scrape_chapter() {
-	#printf "Downloading Ch: $selected_chapter_num\n"
 	if [[ -z "${mod_manga_title}" ]]; then
 		manga_title="${result_titles[${selected_manga_num} - 1]}"
 		mod_manga_title="$(printf "%s" "${manga_title}" | tr " " "_")" # Replace spaces with underscores
